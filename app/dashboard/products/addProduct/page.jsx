@@ -1,13 +1,14 @@
+import { addNewProduct } from '@/app/lib/action';
 import style from '../../../ui/dashboard/products/addproduct.module.css';
 
 const addproduct =()=>{
     return(
         <div className="bg-[var(--bgSoft)] p-4 rounded-lg mt-4">
-            <form action="" className={`${style.form} flex flex-wrap justify-between`}>
+            <form action={addNewProduct} className={`${style.form} flex flex-wrap justify-between`}>
                 <input type="text" placeholder="title" name='title' required/>
                 <select name="cat" id="cat">
                     <option className={`${style.option}`} value="none">Choose a Category</option>
-                    <option className={`${style.option}`} value="kitchen">Kitechen</option>
+                    <option className={`${style.option}`} value="kitchen">Kitchen</option>
                     <option className={`${style.option}`} value="phone">Phone</option>
                     <option className={`${style.option}`} value="computer">Computer</option>
                 </select>

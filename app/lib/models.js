@@ -66,9 +66,10 @@ const productSchema = new mongoose.Schema({
     size: {
         type: String,
     },
-    address: {
+    cat: {
         type: String,
     },
+ 
 }, { timestamps: true });
 
 export const User=mongoose.models.User || mongoose.model("User",userSchema);

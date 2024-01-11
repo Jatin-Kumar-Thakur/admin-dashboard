@@ -5,14 +5,14 @@ import Search from '../../ui/dashboard/search/page';
 import Link from "next/link";
 import { fetchUsers } from "@/app/lib/data";
 import Pagination from "@/app/ui/dashboard/pagination/page";
-import { searchParams } from "next/navigation";
+import { deleteUser } from "@/app/lib/action";
 
 
 const UsersPage = async ({ searchParams }) => {
-    const q=searchParams?.q || "";
-    const page=searchParams?.page || 1;
-    const {count,users}=await fetchUsers(q,page);
-    
+    const q = searchParams?.q || "";
+    const page = searchParams?.page || 1;
+    const { count, users } = await fetchUsers(q, page);
+
     // try {
     //     users = await fetchUsers(q,page);
     // } catch (error) {
@@ -57,12 +57,15 @@ const UsersPage = async ({ searchParams }) => {
                                         <span className="ml-2">{item.username}</span>
                                     </td>
                                     <td><span>{item.email}</span></td>
-                                    <td><span>{item.createdAt?.toString().slice(4,16)}</span></td>
-                                    <td><span>{item.isAdmin ? "Admin":"Client"}</span></td>
+                                    <td><span>{item.createdAt?.toString().slice(4, 16)}</span></td>
+                                    <td><span>{item.isAdmin ? "Admin" : "Client"}</span></td>
                                     <td><span>{item.isActive ? "active" : "passive"}</span></td>
-                                    <td>
+                                    <td className="flex">
                                         <Link href={`/dashboard/users/${item.id}`}><button className="bg-teal-500 p-1 text-xs rounded-lg px-2 mr-1">View</button></Link>
-                                        <button className="bg-red-500 p-1 text-xs rounded-lg px-2 mr-1">Delete</button>
+                                        <form action={deleteUser}>
+                                            <input type="hidden" name="id" value={item.id} />
+                                            <button className="bg-red-500 p-1 text-xs rounded-lg px-2 mr-1">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             ))
@@ -71,7 +74,7 @@ const UsersPage = async ({ searchParams }) => {
                     </tbody>
                 </table>
             </div>
-            <Pagination count={count}/>
+            <Pagination count={count} />
         </div>
     )
 }

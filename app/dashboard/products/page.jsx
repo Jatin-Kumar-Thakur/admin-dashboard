@@ -4,6 +4,7 @@ import Search from '../../ui/dashboard/search/page';
 import Link from "next/link";
 import Pagination from "@/app/ui/dashboard/pagination/page";
 import { fetchProducts } from "@/app/lib/data";
+import { deleteProduct } from "@/app/lib/action";
 const ProductsPage = async ({ searchParams }) => {
 
     const q = searchParams?.q || "";
@@ -50,9 +51,12 @@ const ProductsPage = async ({ searchParams }) => {
                                     <td><span>${item.price}</span></td>
                                     <td><span>{item.createdAt?.toString().slice(4, 16)}</span></td>
                                     <td><span>{item.stock}</span></td>
-                                    <td>
+                                    <td className="flex">
                                         <Link href={`/dashboard/products/${item.id}`}><button className="bg-teal-500 p-1 text-xs rounded-lg px-2 mr-1">View</button></Link>
-                                        <button className="bg-red-500 p-1 text-xs rounded-lg px-2 mr-1">Delete</button>
+                                        <form action={deleteProduct}>
+                                            <input type="hidden" name="id" value={item.id} />
+                                            <button className="bg-red-500 p-1 text-xs rounded-lg px-2 mr-1">Delete</button>
+                                        </form>
                                     </td>
                                 </tr>
                             ))

@@ -1,9 +1,10 @@
 import style from '../../../ui/dashboard/products/addproduct.module.css';
+import { addNewUser } from '@/app/lib/action';
 export default function addUser() {
     return (
         <div className="">
             <div className="bg-[var(--bgSoft)] p-4 rounded-lg mt-4">
-                <form action="" className={`${style.form} flex flex-wrap justify-between`}>
+                <form action={addNewUser} className={`${style.form} flex flex-wrap justify-between`}>
                     <input type="text" placeholder="username" name='username' required />
                     <input type="email" name='email' placeholder="email" required />
                     <input type="password" name='password' placeholder="password" />
