@@ -12,8 +12,11 @@ import {
     MdLogout,
 } from "react-icons/md";
 import MenuLink from "./menuLink";
-const Sidebar = () => {
+import { auth } from "@/app/auth";
+import { logout } from "@/app/lib/action";
+const Sidebar = async () => {
 
+    const { user } = await auth();
     const menuItems = [
         {
             title: "Pages",
@@ -82,17 +85,17 @@ const Sidebar = () => {
         <div className="sticky top-[40px]">
             <div className="flex items-center gap-5 mb-5">
                 <Image
-                className="rounded-full object-cover"
-                    src='/noavatar.png'
+                    className="rounded-full object-cover"
+                    src={user.img || '/noavatar.png'}
                     alt='user img'
                     width={50}
                     height={50}
                 />
                 <div className="align-middle flex flex-col text-xs">
-                    <span>Jatin kumar </span>
+                    <span>{user.username} </span>
                     <span className="text-[var(--textSoft)]">Admin</span>
                 </div>
-                
+
             </div>
             <ul className="w-full">
                 {
@@ -109,10 +112,12 @@ const Sidebar = () => {
                     ))
                 }
             </ul>
-            <button className="flex items-center  bg-none p-3 rounded-lg gap-1 my-1 cursor-pointer border-none text-white w-full hover:bg-[#2e374a]">
-                <MdLogout />
-                <p className="">Logout</p>
-            </button>
+            <form action={logout}>
+                <button className="flex items-center  bg-none p-3 rounded-lg gap-1 my-1 cursor-pointer border-none text-white w-full hover:bg-[#2e374a]">
+                    <MdLogout />
+                    <p className="">Logout</p>
+                </button>
+            </form>
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { User, Product } from "./models";
 import { connectToDb } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from 'bcrypt';
+import { signIn, signOut } from "../auth";
 
 
 
@@ -30,7 +31,7 @@ export const addNewUser = async (formData) => {
 }
 export const addNewProduct = async (formData) => {
 
-    const { title, desc, price, stock, color, size ,cat} = Object.fromEntries(formData);
+    const { title, desc, price, stock, color, size} = Object.fromEntries(formData);
 
     try {
         connectToDb();
@@ -157,4 +158,22 @@ export const updateProduct = async (formData) => {
 
     revalidatePath("/dashboard/products");
     redirect("/dashboard/products");
+}
+
+// *************************** LOGIN********************
+
+export const authenticate = async (prevState, formData)=>{
+    const {username , password}=Object.fromEntries(formData);
+
+    try {
+        await signIn("credentials",{username,password});
+    } catch (error) {
+        return "wrong Credentials";
+    }
+}
+
+
+//  ******************* logout
+export const logout=async()=>{
+    await signOut();
 }
